@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Task } from '../../models/task.model';
 import { List } from '../../models/list.model';
 import { NgClass } from '@angular/common';
+import { AuthService } from '../../auth.service';
 @Component({
   selector: 'app-taskview',
   standalone: true,
@@ -17,7 +18,7 @@ export class TaskviewComponent implements OnInit{
   lists:List[] = [];
   tasks:Task[] = [];
   selectedListId: any;
-  constructor(private taskService:TaskService,private route:ActivatedRoute,private router:Router){}
+  constructor(private taskService:TaskService,private route:ActivatedRoute,private router:Router,private authService:AuthService){}
 
   ngOnInit(){
      this.route.params.subscribe((params:Params)=>{
@@ -69,6 +70,11 @@ export class TaskviewComponent implements OnInit{
      this.tasks =  this.tasks?.filter(val=>val._id !== id)
        console.log(res)
      })
+  }
+
+  logout(): void {
+    this.authService.logout();
+    // this.router.navigate(['/login']);
   }
 
 

@@ -11,7 +11,7 @@ export class WebReqInterceptor implements HttpInterceptor  {
   constructor(private authService:AuthService) { }
    
   refreshingAccessToken:boolean | undefined;
-  accessTokenRefreshed:Subject<any> = new Subject()
+  accessTokenRefreshed = new Subject()
 
 
   intercept(request:HttpRequest<any>,next:HttpHandler):Observable<any>{
@@ -62,7 +62,7 @@ export class WebReqInterceptor implements HttpInterceptor  {
       return this.authService.getNewAccessToken().pipe(
         tap(()=>{
           this.refreshingAccessToken = false;
-          this.accessTokenRefreshed.next();
+          this.accessTokenRefreshed.next(true);
           console.log("Access Token refreshed")
         })
       )
